@@ -1,6 +1,4 @@
-# COMP377 AI for Software Developers (SEC. 001) Group 1
-
-## React + Vite
+# React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
