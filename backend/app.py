@@ -2,13 +2,21 @@ from flask import Flask, request, jsonify
 import os
 from model import load_model, predict as model_predict
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../client/dist", static_url_path="/")
 MODEL = load_model()
 
 
-@app.route("/", methods=["GET"])
+@app.route("/")
 def index():
-    return jsonify({"status": "ok", "service": "diabetes-backend"})
+    return app.send_static_file("index.html")
+
+
+@app.route("/<path:path>")
+def static_proxy(path):
+    # serve static files if they exist, otherwise fallback to index.html
+    if os.path.exists(os.path.join(app.static_folder, path)):
+        return app.send_static_file(path)
+    return app.send_static_file("index.html")
 
 
 @app.route("/predict", methods=["POST"])
